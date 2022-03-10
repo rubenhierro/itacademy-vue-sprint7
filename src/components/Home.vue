@@ -1,26 +1,44 @@
 <script>
+import Panel from './Panel.vue'
+import BudgedService from '../services/BudgedService'
+const budged = new BudgedService()
+
 export default {
+  components: {
+    Panel,
+  },  
   data(){
     return {
-      total: 0,
       web: false,
+      webPages: 0,
+      webLanguages: 0,
       seo: false,
       ads: false,
-      valors: [this.web, this.seo, this.ads],
+      total: 0,
     }
-  }, 
-  watch: {
-    web(valor) {
-      this.total = valor === true ? this.total += 500 : this.total -= 500;
+  },
+  methods: {
+    updatePages(val) {
+      this.webPages = Number(val);
     },
-    seo(valor) {
-      this.total = valor === true ? this.total += 300 : this.total -= 300;
+    updateLanguages(val) {
+      this.webLanguages = Number(val);
     },
-    ads(valor) {
-      this.total = valor === true ? this.total += 200 : this.total -= 200;
-    }
-  }
-
+  },
+  mounted() {
+    this.$watch(
+     (i) => [i.web, i.webPages, i.webLanguages, i.seo, i.ads],
+     (val) => {
+       this.total = budged.getTotalBudged(
+         this.web,
+         this.webPages,
+         this.webLanguages,
+         this.seo,
+         this.ads
+       )
+     } 
+    )
+  },
 }
 </script>
 
@@ -28,6 +46,13 @@ export default {
   <h2>Què vols fer?</h2>
   <input type="checkbox" id="web" v-model="web" @click="budged">
   <label for="web">Una pàgina web (500€) {{ web }}</label> <br>
+  <Panel  
+    v-if="this.web === true"
+    :pages="webPages"
+    :languages="webLanguages"
+    @updatePages="updatePages"
+    @updateLanguages="updateLanguages"
+  /> <br>
   <input type="checkbox" id="seo" v-model="seo">
   <label for="seo">Una consultoria SEO (300€) {{ seo }}</label> <br>
   <input type="checkbox" id="ads" v-model="ads">
@@ -37,4 +62,4 @@ export default {
 
 <style>
 
-</style>§
+</style>
