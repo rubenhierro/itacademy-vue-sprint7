@@ -1,25 +1,46 @@
 <script>
+import CustomInput from "./CustomInput.vue"
+
 export default {
-  props: ['pages', 'languages'],
-  emits: ['updatePages', 'updateLanguages'],
+    props: ["pages", "languages"],
+    emits: ["updatePages", "updateLanguages"],
+    components: { CustomInput },
+    data() {
+      return {
+          pagesNumber: this.pages,
+          languagesNumber: this.languages
+      }
+    },
+  methods: {
+    updatePanelPages(val) {
+      this.pagesNumber = Number(val);
+    },
+    updatePanelLanguages(val) {
+      this.languagesNumber = Number(val);
+    },
+  },
 }
 </script>
 
 <template>
   <label for="numPages">Número de pàgines:</label>
-  <input 
-    type="text" 
-    id="numPages" 
+  <CustomInput 
+    :type="`text`"
+    :id="`numPages`"
     :value="pages"
-    @input="$emit('updatePages', $event.target.value)"
-    >
+    @updateInputValue="updatePanelPages"
+    @vnode-updated="$emit('updatePages', this.pagesNumber)"
+  />
+
      <br>
   <label for="numLang">Número d'idiomes:</label>
-  <input type="text"
-  id="numLang" 
-  :value="languages"
-  @input="$emit('updateLanguages', $event.target.value)"
-  >
+  <CustomInput 
+    :type="`text`"
+    :id="`numLang`"
+    :value="languages"
+    @updateInputValue="updatePanelLanguages"
+    @vnode-updated="$emit('updateLanguages', this.languagesNumber)"
+  />
 </template>
 
 <style>
