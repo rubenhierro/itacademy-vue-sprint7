@@ -3,22 +3,8 @@ import CustomInput from "./CustomInput.vue"
 
 export default {
     props: ["pages", "languages"],
-    emits: ["updatePages", "updateLanguages"],
+    emits: ["update:pages", "update:languages"],
     components: { CustomInput },
-    data() {
-      return {
-          pagesNumber: this.pages,
-          languagesNumber: this.languages
-      }
-    },
-  methods: {
-    updatePanelPages(val) {
-      this.pagesNumber = Number(val);
-    },
-    updatePanelLanguages(val) {
-      this.languagesNumber = Number(val);
-    },
-  },
 }
 </script>
 
@@ -27,9 +13,8 @@ export default {
   <CustomInput 
     :type="`text`"
     :id="`numPages`"
-    :value="pages"
-    @updateInputValue="updatePanelPages"
-    @vnode-updated="$emit('updatePages', this.pagesNumber)"
+    v-model="pages"
+    @vnode-updated="$emit('update:pages', pages)"
   />
 
      <br>
@@ -37,9 +22,8 @@ export default {
   <CustomInput 
     :type="`text`"
     :id="`numLang`"
-    :value="languages"
-    @updateInputValue="updatePanelLanguages"
-    @vnode-updated="$emit('updateLanguages', this.languagesNumber)"
+    v-model="languages"
+    @vnode-updated="$emit('update:languages', languages)"
   />
 </template>
 

@@ -17,14 +17,6 @@ export default {
       total: 0,
     }
   },
-  methods: {
-    updatePages(val) {
-      this.webPages = Number(val);
-    },
-    updateLanguages(val) {
-      this.webLanguages = Number(val);
-    },
-  },
   mounted() {
     this.$watch(
      (i) => [i.web, i.webPages, i.webLanguages, i.seo, i.ads],
@@ -48,10 +40,8 @@ export default {
   <label for="web">Una pàgina web (500€) {{ web }}</label> <br>
   <Panel  
     v-if="this.web === true"
-    :pages="webPages"
-    :languages="webLanguages"
-    @updatePages="updatePages"
-    @updateLanguages="updateLanguages"
+      v-model:pages="webPages"
+      v-model:languages="webLanguages"
   /> <br>
   <input type="checkbox" id="seo" v-model="seo">
   <label for="seo">Una consultoria SEO (300€) {{ seo }}</label> <br>

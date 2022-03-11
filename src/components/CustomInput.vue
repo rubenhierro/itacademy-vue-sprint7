@@ -1,22 +1,22 @@
 <script>
 export default {
-  props: ['value', 'type', 'id'],
-  emits: ['updateInputValue'],
+  props: ['modelValue', 'type', 'id'],
+  emits: ['update:modelValue'],
 }
 </script>
 
 <template>
   <button
-    @click="$emit('updateInputValue', ++value)"
+    @click="$emit('update:modelValue', ++modelValue)"
   >+</button>
   <input
     :type="type"
     :id="id"
-    :value="value"
-    @input="$emit('updateInputValue', $event.target.value)"
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
   />
   <button
-    @click="$emit('updateInputValue', value >= 1 ? --value : value)"
+    @click="$emit('update:modelValue', modelValue >= 1 ? --modelValue : modelValue)"
    >-</button>
 </template>
 
