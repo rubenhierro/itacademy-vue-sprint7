@@ -13,6 +13,7 @@ export default {
   <CustomInput 
     :type="`text`"
     :id="`numPages`"
+    :description="`Número de pàgines que tindrà la web.`"
     v-model="pages"
     @vnode-updated="$emit('update:pages', pages)"
   />
@@ -22,6 +23,7 @@ export default {
   <CustomInput 
     :type="`text`"
     :id="`numLang`"
+    :description="`Número d'idiomes que tindrà la web.`"
     v-model="languages"
     @vnode-updated="$emit('update:languages', languages)"
   />
