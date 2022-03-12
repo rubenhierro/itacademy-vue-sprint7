@@ -7,7 +7,7 @@ export default {
 
 <template>
   <button
-    @click="$emit('update:modelValue', ++modelValue)"
+    @click.prevent="$emit('update:modelValue', ++modelValue)"
   >+</button>
   <input
     :type="type"
@@ -16,7 +16,7 @@ export default {
     @input="$emit('update:modelValue', $event.target.value)"
   />
   <button
-    @click="$emit('update:modelValue', modelValue >= 1 ? --modelValue : modelValue)"
+    @click.prevent="$emit('update:modelValue', modelValue >= 1 ? --modelValue : modelValue)"
    >-</button>
 
   <!-- Bootstrap modal -->
