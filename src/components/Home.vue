@@ -4,6 +4,7 @@ import BudgedService from '../services/BudgedService'
 import Budged from '../Budged'
 
 const budgedService = new BudgedService()
+const budgedList = new Array()
 
 export default {
   components: {
@@ -11,7 +12,6 @@ export default {
   },  
   data(){
     return {
-      budgeds: [],
       name: null,
       customer: null,
       web: false,
@@ -34,7 +34,12 @@ export default {
         this.ads,
         this.total
         )
-        console.log(budged);
+
+      if(!budgedService.exist(budgedList, budged)) {
+        budgedList.push(budged);
+      } else {
+        budgedService.update(budgedList, budged)
+      }
     }
   },
   mounted() {
