@@ -13,15 +13,15 @@ export default class {
       webLanguages > 0 ? (subtotal += webLanguages * webItem) : null;
     }
 
-    if (seo === true) {
-      total += seoPrice;
-    }
+    if (seo === true) total += seoPrice;
 
-    if (ads === true) {
-      total += adsPrice;
-    }
+    if (ads === true) total += adsPrice;
 
     return total + subtotal;
+  }
+
+  exist(budgedList, budged) {
+    return budgedList.some((i) => i.id === budged.id);
   }
 
   getId(budgedList, budged) {
@@ -30,11 +30,23 @@ export default class {
     return idArr.indexOf(budged.id);
   }
 
-  exist(budgedList, budged) {
-    return budgedList.some((i) => i.id === budged.id);
-  }
-
   update(budgedList, budged) {
     budgedList.splice(this.getId(budgedList, budged), 1, budged);
+  }
+
+  sortByName(budgedList, mode) {
+    return mode === "asc"
+      ? budgedList.sort((a, b) => a.name - b.name)
+      : budgedList.sort((a, b) => b.name - a.name);
+  }
+
+  sortByDate(budgedList, mode) {
+    return mode === "asc"
+      ? budgedList.sort((a, b) => a.date - b.date)
+      : budgedList.sort((a, b) => b.date - a.date);
+  }
+
+  sortByDefault(budgedList) {
+    return budgedList.sort((a, b) => a.id - b.id);
   }
 }

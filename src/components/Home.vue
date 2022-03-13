@@ -1,17 +1,19 @@
 <script>
 import Panel from './Panel.vue'
+import List from './List.vue'
 import BudgedService from '../services/BudgedService'
-import Budged from '../Budged'
+import Budged from '../BudgedClass'
 
 const budgedService = new BudgedService()
-const budgedList = new Array()
 
 export default {
   components: {
     Panel,
+    List
   },  
   data(){
     return {
+      budgedList: new Array(),
       name: null,
       customer: null,
       web: false,
@@ -20,6 +22,7 @@ export default {
       seo: false,
       ads: false,
       total: 0,
+      budgedFake: ['asdf','fdfafsdf','sdferrrr']
     }
   },
   methods: {
@@ -35,10 +38,11 @@ export default {
         this.total
         )
 
-      if(!budgedService.exist(budgedList, budged)) {
-        budgedList.push(budged);
+      if(!budgedService.exist(this.budgedList, budged)) {
+        this.budgedList.push(budged);
+        console.log(this.budgedList);
       } else {
-        budgedService.update(budgedList, budged)
+        budgedService.update(this.budgedList, budged)
       }
     }
   },
@@ -60,25 +64,36 @@ export default {
 </script>
 
 <template>
-  <h2>Pressupost</h2>
-  <form>
-    <input type="text" v-model="name"> <br>
-    <input type="text" v-model="customer"> <br>
-    <input type="checkbox" id="web" v-model="web">
-    <label for="web">Una pàgina web (500€)</label> <br>
-    <Panel  
-      v-if="this.web === true"
-        v-model:pages="webPages"
-        v-model:languages="webLanguages"
-    /> <br>
-    <input type="checkbox" id="seo" v-model="seo">
-    <label for="seo">Una consultoria SEO (300€}</label> <br>
-    <input type="checkbox" id="ads" v-model="ads">
-    <label for="ads">Una campanya de Google Ads (200€)</label><br>
-    <h3>{{ total }} €</h3>
-    <button type="reset">Reset</button>
-    <button type="submit" @click.prevent="addBudged">Afegir</button>
-  </form>
+<div class="container">
+  <div class="budged-container">
+    <h2>Pressupost</h2>
+    <form>
+      <input type="text" v-model="name"> <br>
+      <input type="text" v-model="customer"> <br>
+      <input type="checkbox" id="web" v-model="web">
+      <label for="web">Una pàgina web (500€)</label> <br>
+      <Panel  
+        v-if="this.web === true"
+          v-model:pages="webPages"
+          v-model:languages="webLanguages"
+      /> <br>
+      <input type="checkbox" id="seo" v-model="seo">
+      <label for="seo">Una consultoria SEO (300€}</label> <br>
+      <input type="checkbox" id="ads" v-model="ads">
+      <label for="ads">Una campanya de Google Ads (200€)</label><br>
+      <h3>{{ total }} €</h3>
+      <button type="reset">Reset</button>
+      <button type="submit" @click.prevent="addBudged">Afegir</button>
+    </form>
+  </div>
+  
+  <div class="list-container">
+    <List 
+      v-if="budgedList.length > 0"
+      :budgedList="budgedList"
+    />
+  </div>
+</div>
 </template>
 
 <style>
