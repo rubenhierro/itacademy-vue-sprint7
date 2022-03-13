@@ -21,32 +21,44 @@ export default class {
   }
 
   exist(budgedList, budged) {
-    return budgedList.some((i) => i.id === budged.id);
+    return budgedList.some((i) => i.name === budged.name);
   }
 
   getId(budgedList, budged) {
-    const idArr = budgedList.map((i) => i.id);
-    console.log(idArr.indexOf(budged.id));
-    return idArr.indexOf(budged.id);
+    const idArr = budgedList.map((i) => i.name);
+    console.log(idArr.indexOf(budged.name));
+    return idArr.indexOf(budged.name);
   }
 
   update(budgedList, budged) {
     budgedList.splice(this.getId(budgedList, budged), 1, budged);
   }
 
-  sortByName(budgedList, mode) {
-    return mode === "asc"
-      ? budgedList.sort((a, b) => a.name - b.name)
-      : budgedList.sort((a, b) => b.name - a.name);
+  sortByName(budgedList, asc) {
+    return asc === false
+    ? budgedList.sort((a, b) =>
+        a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+      )
+    : budgedList.sort((a, b) =>
+        b.name > a.name ? 1 : a.name > b.name ? -1 : 0
+      );
   }
 
-  sortByDate(budgedList, mode) {
-    return mode === "asc"
-      ? budgedList.sort((a, b) => a.date - b.date)
-      : budgedList.sort((a, b) => b.date - a.date);
+  sortByDate(budgedList, asc) {
+    return asc === false
+    ? budgedList.sort((a, b) =>
+        a.date > b.date ? 1 : b.date > a.date ? -1 : 0
+      )
+    : budgedList.sort((a, b) =>
+        b.date > a.date ? 1 : a.date > b.date ? -1 : 0
+      );
   }
 
   sortByDefault(budgedList) {
     return budgedList.sort((a, b) => a.id - b.id);
+  }
+
+  sortNums(budgedList) {
+    return budgedList.sort((a, b) => a - b);
   }
 }

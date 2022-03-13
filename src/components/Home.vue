@@ -22,7 +22,6 @@ export default {
       seo: false,
       ads: false,
       total: 0,
-      budgedFake: ['asdf','fdfafsdf','sdferrrr']
     }
   },
   methods: {
@@ -68,8 +67,10 @@ export default {
   <div class="budged-container">
     <h2>Pressupost</h2>
     <form>
-      <input type="text" v-model="name"> <br>
-      <input type="text" v-model="customer"> <br>
+      <label for="name">Nom</label>
+      <input type="text" id="name" v-model="name"> <br>
+      <label for="costurmer">Client</label>
+      <input type="text" id="costumer" v-model="customer"> <br>
       <input type="checkbox" id="web" v-model="web">
       <label for="web">Una pàgina web (500€)</label> <br>
       <Panel  
@@ -96,6 +97,11 @@ export default {
 </div>
 </template>
 
-<style>
-
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 </style>
