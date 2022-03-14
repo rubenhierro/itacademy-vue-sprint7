@@ -14,6 +14,8 @@ export default {
   data(){
     return {
       budgedList: new Array(),
+      selectedItemId: null,
+      modeEdit: false,
       name: null,
       customer: null,
       web: false,
@@ -36,13 +38,31 @@ export default {
         this.ads,
         this.total
         )
-
-      if(!budgedService.exist(this.budgedList, budged)) {
-        this.budgedList.push(budged);
-        console.log(this.budgedList);
+      if(this.modeEdit !== true) {
+        if(!budgedService.exist(this.budgedList, budged)) {
+          this.budgedList.push(budged);
+          console.log(this.budgedList);
+        } else {
+          budgedService.update(this.budgedList, budged)
+        } 
       } else {
-        budgedService.update(this.budgedList, budged)
+        console.log('actualitza');
+        budgedService.updateModeEdit(this.budgedList, this.selectedItemId, budged)
+        this.modeEdit = false;
       }
+    },
+    editSelectedItem(id) {
+      this.modeEdit = true;
+      console.log(`mode edit: ${this.modeEdit}` )
+      this.selectedItemId = id;
+      this.name = this.budgedList[id].name
+      this.customer = this.budgedList[id].customer
+      this.web = this.budgedList[id].web
+      this.webPages = this.budgedList[id].webPages
+      this.webLanguages = this.budgedList[id].webLanguages
+      this.seo = this.budgedList[id].seo
+      this.ads = this.budgedList[id].ads
+      this.total = this.budgedList[id].total
     }
   },
   mounted() {
@@ -66,6 +86,7 @@ export default {
 <div class="container">
   <div class="budged-container">
     <h2>Pressupost</h2>
+    <h5 v-if="this.modeEdit === true" class="text-danger">Mode edició</h5>
     <form>
       <label for="name">Nom</label>
       <input type="text" id="name" v-model="name"> <br>
@@ -92,6 +113,7 @@ export default {
     <List 
       v-if="budgedList.length > 0"
       :budgedList="budgedList"
+      @selected-item="editSelectedItem"
     />
   </div>
 </div>

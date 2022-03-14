@@ -5,6 +5,7 @@ const budgedService = new BudgedService()
 
 export default {
   props: ['budgedList'],
+  emits: ['selected-item'],
   data(){
     return {
       isNameSortetAsc: false,
@@ -25,6 +26,8 @@ export default {
     sortByDefault() {
       budgedService.sortByDefault(this.budgedList)
       this.budgedQueryList = []
+      this.isDateSortetAsc = false
+      this.isNameSortetAsc = false
     },
 
     search(query) {
@@ -34,7 +37,6 @@ export default {
 
     deleteItem(index) {
       budgedService.delete(this.budgedList, index)
-      console.log(e);
     }
   }
 }
@@ -53,6 +55,7 @@ export default {
   <div v-for="(budged, key) of budgedQueryList.length > 0 ? budgedQueryList: null || budgedList" class="card">
     <div class="card-body">
       <span>Nom: {{ budged.name }} - Client: {{ budged.customer }} - {{ budged.date }} - Total {{ budged.total }}€
+      <button @click="$emit('selected-item', key)">edit</button>
       <button @click="deleteItem(key)">delete</button>
       </span>
     </div>

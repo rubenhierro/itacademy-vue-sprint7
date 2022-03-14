@@ -34,6 +34,10 @@ export default class {
     budgedList.splice(this.getId(budgedList, budged), 1, budged);
   }
 
+  updateModeEdit(budgedList, id, budged) {
+    budgedList.splice(id, 1, budged);
+  }
+
   sortByName(budgedList, asc) {
     return asc === false
       ? budgedList.sort((a, b) =>
