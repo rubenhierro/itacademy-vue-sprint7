@@ -41,15 +41,18 @@ export default {
       if(this.modeEdit !== true) {
         if(!budgedService.exist(this.budgedList, budged)) {
           this.budgedList.push(budged);
-          console.log(this.budgedList);
+
         } else {
           budgedService.update(this.budgedList, budged)
+
         } 
       } else {
-        console.log('actualitza');
         budgedService.updateModeEdit(this.budgedList, this.selectedItemId, budged)
         this.modeEdit = false;
       }
+      
+      localStorage.setItem('budgedList', JSON.stringify(this.budgedList));
+      this.reset();
     },
     editSelectedItem(id) {
       this.modeEdit = true;
@@ -63,6 +66,16 @@ export default {
       this.seo = this.budgedList[id].seo
       this.ads = this.budgedList[id].ads
       this.total = this.budgedList[id].total
+    },
+    reset() {
+      this.name = null,
+      this.customer = null,
+      this.web = false,
+      this.webPages = 0,
+      this.webLanguages = 0,
+      this.seo = false,
+      this.ads = false,
+      this.total = 0
     }
   },
   mounted() {
@@ -105,6 +118,7 @@ export default {
       <label for="ads">Una campanya de Google Ads (200€)</label><br>
       <h3>{{ total }} €</h3>
       <button type="reset">Reset</button>
+      <!-- delete prevent -->
       <button type="submit" @click.prevent="addBudged">Afegir</button>
     </form>
   </div>
