@@ -36,22 +36,22 @@ export default class {
 
   sortByName(budgedList, asc) {
     return asc === false
-    ? budgedList.sort((a, b) =>
-        a.name > b.name ? 1 : b.name > a.name ? -1 : 0
-      )
-    : budgedList.sort((a, b) =>
-        b.name > a.name ? 1 : a.name > b.name ? -1 : 0
-      );
+      ? budgedList.sort((a, b) =>
+          a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+        )
+      : budgedList.sort((a, b) =>
+          b.name > a.name ? 1 : a.name > b.name ? -1 : 0
+        );
   }
 
   sortByDate(budgedList, asc) {
     return asc === false
-    ? budgedList.sort((a, b) =>
-        a.date > b.date ? 1 : b.date > a.date ? -1 : 0
-      )
-    : budgedList.sort((a, b) =>
-        b.date > a.date ? 1 : a.date > b.date ? -1 : 0
-      );
+      ? budgedList.sort((a, b) =>
+          a.date > b.date ? 1 : b.date > a.date ? -1 : 0
+        )
+      : budgedList.sort((a, b) =>
+          b.date > a.date ? 1 : a.date > b.date ? -1 : 0
+        );
   }
 
   sortByDefault(budgedList) {
@@ -60,5 +60,15 @@ export default class {
 
   sortNums(budgedList) {
     return budgedList.sort((a, b) => a - b);
+  }
+
+  search(budgedList, query) {
+    return budgedList.filter(
+      (i) => i.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
+    );
+  }
+
+  delete(budgedList, index) {
+    budgedList.splice(index, 1);
   }
 }
