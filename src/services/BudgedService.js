@@ -39,23 +39,15 @@ export default class {
   }
 
   sortByName(budgedList, asc) {
-    return asc === false
-      ? budgedList.sort((a, b) =>
-          a.name > b.name ? 1 : b.name > a.name ? -1 : 0
-        )
-      : budgedList.sort((a, b) =>
-          b.name > a.name ? 1 : a.name > b.name ? -1 : 0
-        );
+    return asc === true
+      ? budgedList.sort((a, b) => a.name.localeCompare(b.name))
+      : budgedList.sort((a, b) => b.name.localeCompare(a.name));
   }
 
   sortByDate(budgedList, asc) {
-    return asc === false
-      ? budgedList.sort((a, b) =>
-          a.date > b.date ? 1 : b.date > a.date ? -1 : 0
-        )
-      : budgedList.sort((a, b) =>
-          b.date > a.date ? 1 : a.date > b.date ? -1 : 0
-        );
+    return asc === true
+      ? budgedList.sort((a, b) => a.date.localeCompare(b.date))
+      : budgedList.sort((a, b) => b.date.localeCompare(a.date));
   }
 
   sortByDefault(budgedList) {

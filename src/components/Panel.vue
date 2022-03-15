@@ -9,26 +9,41 @@ export default {
 </script>
 
 <template>
-  <label for="numPages">Número de pàgines:</label>
-  <CustomInput 
-    :type="`text`"
-    :id="`numPages`"
-    :description="`Número de pàgines que tindrà la web.`"
-    v-model="pages"
-    @vnode-updated="$emit('update:pages', pages)"
-  />
-
-     <br>
-  <label for="numLang">Número d'idiomes:</label>
-  <CustomInput 
-    :type="`text`"
-    :id="`numLang`"
-    :description="`Número d'idiomes que tindrà la web.`"
-    v-model="languages"
-    @vnode-updated="$emit('update:languages', languages)"
-  />
+  <div class="panel">
+    <label for="numPages">Num. pàgines:</label>
+    <CustomInput 
+      :type="`text`"
+      :id="`numPages`"
+      :description="`Número de pàgines que tindrà la web.`"
+      v-model="pages"
+      @vnode-updated="$emit('update:pages', pages)"
+    />
+  
+       <br>
+    <label for="numLang">Num. idiomes:</label>
+    <CustomInput 
+      :type="`text`"
+      :id="`numLang`"
+      :description="`Número d'idiomes que tindrà la web.`"
+      v-model="languages"
+      @vnode-updated="$emit('update:languages', languages)"
+    />  
+  </div>
 </template>
 
 <style>
+  .panel {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 12px;
+  }
 
+  .panel input {
+    width: 50px;
+  }
+
+  input, button {
+  margin: 5px;
+}
 </style>
