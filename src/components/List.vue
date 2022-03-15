@@ -37,6 +37,7 @@ export default {
 
     deleteItem(index) {
       budgedService.delete(this.budgedList, index)
+      localStorage.setItem('budgedList', JSON.stringify(this.budgedList));
     }
   }
 }

@@ -13,7 +13,10 @@ export default {
   },  
   data(){
     return {
-      budgedList: new Array(),
+      budgedList: 
+      localStorage.hasOwnProperty('budgedList')
+      ? JSON.parse(localStorage.getItem('budgedList'))
+      : [],
       selectedItemId: null,
       modeEdit: false,
       name: null,
@@ -50,7 +53,7 @@ export default {
         budgedService.updateModeEdit(this.budgedList, this.selectedItemId, budged)
         this.modeEdit = false;
       }
-      
+
       localStorage.setItem('budgedList', JSON.stringify(this.budgedList));
       this.reset();
     },
@@ -89,6 +92,15 @@ export default {
          this.seo,
          this.ads
        )
+       this.$router.replace({
+         query: {
+           web: this.web,
+           webPages: this.webPages,
+           webLanguages: this.webLanguages,
+           seo: this.seo,
+           ads: this.ads
+         }
+       })
      } 
     )
   },
