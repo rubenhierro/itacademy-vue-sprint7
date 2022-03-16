@@ -12,7 +12,7 @@ export default class Budged {
 
   constructor(name, customer, web, webPages, webLanguages, seo, ads, total) {
     this.id = Budged.incrementId();
-    this.date = new Date().toLocaleDateString();
+    this.date = new Date().toLocaleString();
     this.name = name;
     this.customer = customer;
     this.web = web;

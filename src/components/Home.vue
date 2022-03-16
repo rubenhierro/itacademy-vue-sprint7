@@ -13,7 +13,10 @@ export default {
   },  
   data(){
     return {
-      budgedList: new Array(),
+      budgedList: 
+      localStorage.hasOwnProperty('budgedList')
+      ? JSON.parse(localStorage.getItem('budgedList'))
+      : [],
       selectedItemId: null,
       modeEdit: false,
       name: null,
@@ -50,7 +53,7 @@ export default {
         budgedService.updateModeEdit(this.budgedList, this.selectedItemId, budged)
         this.modeEdit = false;
       }
-      
+
       localStorage.setItem('budgedList', JSON.stringify(this.budgedList));
       this.reset();
     },
@@ -89,6 +92,15 @@ export default {
          this.seo,
          this.ads
        )
+       this.$router.replace({
+         query: {
+           web: this.web,
+           webPages: this.webPages,
+           webLanguages: this.webLanguages,
+           seo: this.seo,
+           ads: this.ads
+         }
+       })
      } 
     )
   },
@@ -96,30 +108,29 @@ export default {
 </script>
 
 <template>
-<div class="container">
+<div class="home">
   <div class="budged-container">
     <h2>Pressupost</h2>
     <h5 v-if="this.modeEdit === true" class="text-danger">Mode edició</h5>
-    <form>
+    <form @submit="addBudged">
       <label for="name">Nom</label>
-      <input type="text" id="name" v-model="name"> <br>
+      <input type="text" id="name" v-model="name" required> <br>
       <label for="costurmer">Client</label>
-      <input type="text" id="costumer" v-model="customer"> <br>
+      <input type="text" id="costumer" v-model="customer" required> <br>
       <input type="checkbox" id="web" v-model="web">
       <label for="web">Una pàgina web (500€)</label> <br>
       <Panel  
         v-if="this.web === true"
           v-model:pages="webPages"
           v-model:languages="webLanguages"
-      /> <br>
+      />
       <input type="checkbox" id="seo" v-model="seo">
       <label for="seo">Una consultoria SEO (300€}</label> <br>
       <input type="checkbox" id="ads" v-model="ads">
       <label for="ads">Una campanya de Google Ads (200€)</label><br>
-      <h3>{{ total }} €</h3>
+      <h3 id="total">{{ total }} €</h3>
       <button type="reset">Reset</button>
-      <!-- delete prevent -->
-      <button type="submit" @click.prevent="addBudged">Afegir</button>
+      <button type="submit">Guardar</button>
     </form>
   </div>
   
@@ -133,11 +144,20 @@ export default {
 </div>
 </template>
 
-<style scoped>
-.container {
+<style>
+.home {
+  margin: 30px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+input, button {
+  margin: 5px;
+}
+
+#total {
+  margin-top: 10px;
 }
 </style>
