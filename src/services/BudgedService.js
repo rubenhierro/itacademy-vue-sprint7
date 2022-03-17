@@ -9,8 +9,7 @@ export default class {
 
     if (web === true) {
       subtotal += webPrice;
-      webPages > 0 ? (subtotal += webPages * webItem) : null;
-      webLanguages > 0 ? (subtotal += webLanguages * webItem) : null;
+      webPages > 1 || webLanguages > 1 ? (subtotal += webPages * webLanguages * webItem) : null;
     }
 
     if (seo === true) total += seoPrice;
