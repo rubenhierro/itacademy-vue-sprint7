@@ -5,6 +5,20 @@ import BudgedService from '../services/BudgedService'
 import Budged from '../BudgedClass'
 
 const budgedService = new BudgedService()
+let budged = new Budged()
+
+budged = localStorage.hasOwnProperty('budged')
+? JSON.parse(localStorage.getItem('budged'))
+: {
+    name: null,
+    customer: null,
+    web: false,
+    webPages: 1,
+    webLanguages: 1,
+    seo: false,
+    ads: false,
+    total: 0,
+};
 
 export default {
   components: {
@@ -13,20 +27,21 @@ export default {
   },  
   data(){
     return {
+
       budgedList: 
       localStorage.hasOwnProperty('budgedList')
       ? JSON.parse(localStorage.getItem('budgedList'))
       : [],
       selectedItemId: null,
       modeEdit: false,
-      name: null,
-      customer: null,
-      web: false,
-      webPages: 0,
-      webLanguages: 0,
-      seo: false,
-      ads: false,
-      total: 0,
+      name: budged.name,
+      customer: budged.customer,
+      web: budged.web,
+      webPages: budged.webPages,
+      webLanguages: budged.webLanguages,
+      seo: budged.seo,
+      ads: budged.ads,
+      total: budged.total,
     }
   },
   methods: {
@@ -55,7 +70,7 @@ export default {
       }
 
       localStorage.setItem('budgedList', JSON.stringify(this.budgedList));
-      this.reset();
+      localStorage.removeItem('budged');
     },
     editSelectedItem(id) {
       this.modeEdit = true;
@@ -70,20 +85,11 @@ export default {
       this.ads = this.budgedList[id].ads
       this.total = this.budgedList[id].total
     },
-    reset() {
-      this.name = null,
-      this.customer = null,
-      this.web = false,
-      this.webPages = 0,
-      this.webLanguages = 0,
-      this.seo = false,
-      this.ads = false,
-      this.total = 0
-    }
   },
   mounted() {
+
     this.$watch(
-     (i) => [i.web, i.webPages, i.webLanguages, i.seo, i.ads],
+     (i) => [i.name, i.customer, i.web, i.webPages, i.webLanguages, i.seo, i.ads],
      (val) => {
        this.total = budgedService.getTotalBudged(
          this.web,
@@ -92,6 +98,20 @@ export default {
          this.seo,
          this.ads
        )
+       
+      const budged = new Budged(
+        this.name,
+        this.customer,
+        this.web,
+        this.webPages,
+        this.webLanguages,
+        this.seo,
+        this.ads,
+        this.total
+        )
+      
+      localStorage.setItem('budged', JSON.stringify(budged));
+
        this.$router.replace({
          query: {
            web: this.web,

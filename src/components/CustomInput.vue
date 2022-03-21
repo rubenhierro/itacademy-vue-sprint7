@@ -16,7 +16,7 @@ export default {
     @input="$emit('update:modelValue', $event.target.value)"
   />
   <button
-    @click.prevent="$emit('update:modelValue', modelValue >= 1 ? --modelValue : modelValue)"
+    @click.prevent="$emit('update:modelValue', modelValue >= 2 ? --modelValue : modelValue)"
    >-</button>
 
   <!-- Bootstrap modal -->
