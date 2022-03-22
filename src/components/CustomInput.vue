@@ -2,18 +2,25 @@
 export default {
   props: ['modelValue', 'type', 'id', 'description'],
   emits: ['update:modelValue'],
+  methods: {
+    modelValueHandle(e) {
+      const val = e.target.value;
+      console.log(val);
+      if (Number(val) > 1) {
+        e.target.value = parseInt(val);
+      } else {
+        e.target.value = 1
+      }
+      
+      this.$emit('update:modelValue', e.target.value)
+    }
+  }
 }
 </script>
 
 <template>
   <button @click.prevent="$emit('update:modelValue', ++modelValue)">+</button>
-  <input
-    :type="type"
-    :id="id"
-    :value="modelValue"
-    min="1"
-    @input="$emit('update:modelValue', $event.target.value)"
-  />
+  <input :type="type" :id="id" :value="modelValue" @input="modelValueHandle" />
   <button @click.prevent="$emit('update:modelValue', modelValue >= 2 ? --modelValue : modelValue)">-</button>
 
   <!-- Bootstrap modal -->
