@@ -12,7 +12,7 @@ export default {
   <div class="panel">
     <label for="numPages">Num. pàgines:</label>
     <CustomInput 
-      :type="`text`"
+      :type="`number`"
       :id="`numPages`"
       :description="`Número de pàgines que tindrà la web.`"
       v-model="pages"
@@ -22,7 +22,7 @@ export default {
        <br>
     <label for="numLang">Num. idiomes:</label>
     <CustomInput 
-      :type="`text`"
+      :type="`number`"
       :id="`numLang`"
       :description="`Número d'idiomes que tindrà la web.`"
       v-model="languages"

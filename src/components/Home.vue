@@ -27,7 +27,6 @@ export default {
   },  
   data(){
     return {
-
       budgedList: 
       localStorage.hasOwnProperty('budgedList')
       ? JSON.parse(localStorage.getItem('budgedList'))
