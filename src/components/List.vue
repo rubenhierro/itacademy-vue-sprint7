@@ -6,39 +6,33 @@ const budgedService = new BudgedService()
 export default {
   props: ['budgedList'],
   emits: ['selected-item'],
-  data(){
+  data() {
     return {
+
+      budgedQueryList: [...this.budgedList],
       isNameSortedAsc: true,
       isDateSortedAsc: true,
-      budgedQueryList: new Array()
     }
   },
   methods: {
     sortByName() {
-      budgedService.sortByName(this.budgedList, this.isNameSortedAsc)
+      budgedService.sortByName(this.budgedQueryList, this.isNameSortedAsc)
       this.isNameSortedAsc = !this.isNameSortedAsc
     },
 
     sortByDate() {
-      budgedService.sortByDate(this.budgedList, this.isDateSortedAsc)
+      budgedService.sortByDate(this.budgedQueryList, this.isDateSortedAsc)
       this.isDateSortedAsc = !this.isDateSortedAsc
     },
     sortByDefault() {
-      budgedService.sortByDefault(this.budgedList)
-      this.budgedQueryList = []
+      this.budgedQueryList = [...this.budgedList]
       this.isDateSortedAsc = true
       this.isNameSortedAsc = true
     },
 
     search(query) {
-      this.budgedQueryList = budgedService.search(this.budgedList, query)
-      console.log(this.budgedQueryList)
+      this.budgedQueryList = budgedService.search(this.budgedQueryList, query)
     },
-
-    deleteItem(index) {
-      budgedService.delete(this.budgedList, index)
-      localStorage.setItem('budgedList', JSON.stringify(this.budgedList));
-    }
   }
 }
 </script>
@@ -48,44 +42,46 @@ export default {
     <div class="options">
       <form>
         <label for="search">Cercar:</label>
-        <input type="text" id="search" @input="search($event.target.value)">
-        <button type="reset" @click="this.budgedQueryList = []" >x</button>
+        <input type="text" id="search" @input="search($event.target.value)" />
+        <button type="reset" @click="this.budgedQueryList = []">x</button>
       </form>
       <div class="filters">
         <span>Ordena per:</span>
         <button @click="sortByName">Nom</button>
-        <button @click="sortByDate" >Data</button>
-        <button @click="sortByDefault" >Reset</button>
+        <button @click="sortByDate">Data</button>
+        <button @click="sortByDefault">Reset</button>
       </div>
     </div>
-    <hr>
-    <div v-for="(budged, key) of budgedQueryList.length > 0 ? budgedQueryList: null || budgedList" class="card list-items">
+    <hr />
+    <div
+      v-for="(budged, key) of budgedQueryList.length > 0 ? budgedQueryList : null"
+      class="card list-items"
+    >
       <div class="card-body">
         <span>
-          Nom: {{ budged.name }} - 
-          Client: {{ budged.customer }} - 
-          Data: {{ budged.date }} - 
+          Nom: {{ budged.name }} -
+          Client: {{ budged.customer }} -
+          Data: {{ budged.date }} -
           Total {{ budged.total }}€
-        <button @click="$emit('selected-item', key)">edit</button>
-        <button @click="deleteItem(key)">delete</button>
+          <button
+            @click="$emit('selected-item', key)"
+          >edit</button>
         </span>
       </div>
-    </div>  
+    </div>
   </div>
-
 </template>
 
 <style>
 .list {
   display: flex;
   flex-direction: column;
-
 }
 .options {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;  
+  align-items: center;
   margin-bottom: 10px;
   flex-wrap: wrap;
 }
@@ -97,7 +93,8 @@ export default {
 hr {
   border: 1px solid;
 }
-input, button {
+input,
+button {
   margin: 5px;
 }
 </style>

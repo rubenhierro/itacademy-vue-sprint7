@@ -9,7 +9,9 @@ export default class {
 
     if (web === true) {
       subtotal += webPrice;
-      webPages > 1 || webLanguages > 1 ? (subtotal += webPages * webLanguages * webItem) : null;
+      webPages > 0 || webLanguages > 0
+        ? (subtotal += webPages * webLanguages * webItem)
+        : null;
     }
 
     if (seo === true) total += seoPrice;
@@ -49,21 +51,9 @@ export default class {
       : budgedList.sort((a, b) => b.date.localeCompare(a.date));
   }
 
-  sortByDefault(budgedList) {
-    return budgedList.sort((a, b) => a.id - b.id);
-  }
-
-  sortNums(budgedList) {
-    return budgedList.sort((a, b) => a - b);
-  }
-
   search(budgedList, query) {
     return budgedList.filter(
       (i) => i.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
-  }
-
-  delete(budgedList, index) {
-    budgedList.splice(index, 1);
   }
 }
